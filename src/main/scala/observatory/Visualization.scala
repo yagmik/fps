@@ -47,9 +47,8 @@ object Visualization extends VisualizationInterface with Distances {
     * @param temperature The value to interpolate
     * @return The color that corresponds to `value`, according to the color scale defined by `points`
     */
-  def interpolateColor(colors: Iterable[(Temperature, Color)], temperature: Temperature): Color = {
+  def interpolateColor(colors: Iterable[(Temperature, Color)], temperature: Temperature): Color =
     createColorCalculator(colors)(temperature)
-  }
 
   def createColorCalculator(colors: Iterable[(Temperature, Color)]): ColorCalculator = {
     val sortedColorPairs = colors.toIndexedSeq.sortBy(_._1)
@@ -64,7 +63,6 @@ object Visualization extends VisualizationInterface with Distances {
       } else {
         val tc = colorsMap(temperature)
         if (tc != UNKNOWN_COLOR) {
-          assert(false) // TODO такого пока не было -> выкосить
           tc
         } else {
           val i = sortedColorPairs.indices.find(idx => sortedColorPairs(idx + 1)._1 > temperature).get
@@ -90,7 +88,7 @@ object Visualization extends VisualizationInterface with Distances {
     val tuple2Location = (p: (Int, Int)) => Location(p._1, p._2)
     val temperaturePredictor = predictTemperature(temperatures, _)
     val colorCalculator = createColorCalculator(colors)
-    val color2Pixel = (color: Color) => Pixel(color.red, color.green, color.blue, DEFAULT_ALPHA)
+    val color2Pixel: Color => Pixel = color => Pixel(color.red, color.green, color.blue, DEFAULT_ALPHA)
     val mapper =
       tuple2Location
         .andThen(temperaturePredictor)

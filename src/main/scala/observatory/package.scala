@@ -1,3 +1,5 @@
+import scala.math.pow
+
 package object observatory {
   type Temperature = Double // °C, introduced in Week 1
   type Year = Int // Calendar year, introduced in Week 1
@@ -11,10 +13,18 @@ package object observatory {
     -50d -> Color(33, 0, 107),
     -60d -> Color(0, 0, 0)
   ).toSeq
-  val DEFAULT_ALPHA = 127
   val EARTH_RADIUS = 6371d
   val DEFAULT_POWER_PARAMETER = 6
   type Distance = Double
   val UNKNOWN_COLOR: Color = Color(-1, -1, -1)
   type ColorCalculator = Temperature => Color
+  val numOfTiles: Int => Int = zoom => pow(2, zoom).toInt
+  val DEFAULT_ZOOM_LEVEL = 8
+  val DEFAULT_ALPHA = 127
+  // val color2Pixel: Color => Pixel = color => Pixel(color.red, color.green, color.blue, DEFAULT_ALPHA)
+  /*
+    def color2Pixel(color: Color): Pixel = {
+      Pixel(color.red, color.green, color.blue, DEFAULT_ALPHA)
+    }
+  */
 }

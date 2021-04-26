@@ -1,7 +1,7 @@
 package observatory
 
-import org.scalameter.{Key, Warmer, config, measure}
-import com.sksamuel.scrimage.{Image, writer}
+import com.sksamuel.scrimage.writer
+import org.scalameter.{Key, Warmer, config}
 
 object Main {
 
@@ -13,18 +13,30 @@ object Main {
   ) withWarmer (new Warmer.Default)
 
   val stationsPath = "/stations.csv"
-  val temperaturesPath = "/2015.csv"
-  val year = 2015
+  val temperaturesPath = "/1975.csv"
+  val year = 1975
 
-  val data1 = Extraction.locateTemperatures(year, stationsPath, temperaturesPath)
-  val data2 = Extraction.locationYearlyAverageRecords(data1)
+  // val data1 = Extraction.locateTemperatures(year, stationsPath, temperaturesPath)
+  // val data2 = Extraction.locationYearlyAverageRecords(data1)
+
+  val te = Seq(
+    (Location(45.0, -90.0), 20.0),
+    (Location(45.0, 90.0), 0.0),
+    (Location(0.0, 0.0), 10.0),
+    (Location(-45.0, -90.0), 0.0),
+    (Location(-45.0, 90.0), 20.0)
+  )
+
+  val co = List(
+    (0.0, Color(255, 0, 0)),
+    (10.0, Color(0, 255, 0)),
+    (20.0, Color(0, 0, 255))
+  )
+
+  val ti = Tile(0, 0, 0)
 
   def main(args: Array[String]): Unit = {
-    var image: Image = null
-    val c = measure {
-      image = Visualization.visualize(data2, colors)
-    }
-    image.output("360x180.png")
-    println(s"c = ${c.toString()}")
+    val image = Interaction.tile(te, co, ti)
+    image.output("256x256-testData.png")
   }
 }
