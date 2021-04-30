@@ -3,7 +3,7 @@ import scala.math.pow
 package object observatory {
   type Temperature = Double // °C, introduced in Week 1
   type Year = Int // Calendar year, introduced in Week 1
-  val colors: Iterable[(Temperature, Color)] = Map(
+  val colors: Seq[(Temperature, Color)] = Map(
     60d -> Color(255, 255, 255),
     32d -> Color(255, 0, 0),
     12d -> Color(255, 255, 0),
